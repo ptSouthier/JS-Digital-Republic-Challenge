@@ -20,5 +20,8 @@
   "homepage": "https://gitlab.com/ptSouthier/digital-republic-code-challenge#readme",
   "devDependencies": {
     "eslint": "^8.13.0"
+  },
+  "dependencies": {
+    "express": "^4.17.3"
   }
 }
