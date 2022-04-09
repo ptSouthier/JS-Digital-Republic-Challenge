@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://gitlab.com/ptSouthier/digital-republic-code-challenge/issues"
   },
-  "homepage": "https://gitlab.com/ptSouthier/digital-republic-code-challenge#readme"
+  "homepage": "https://gitlab.com/ptSouthier/digital-republic-code-challenge#readme",
+  "devDependencies": {
+    "eslint": "^8.13.0"
+  }
 }
