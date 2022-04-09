@@ -1,0 +1,20 @@
+{
+  "name": "digital-republic-code-challenge",
+  "version": "1.0.0",
+  "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/ptSouthier/digital-republic-code-challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/ptSouthier/digital-republic-code-challenge/issues"
+  },
+  "homepage": "https://gitlab.com/ptSouthier/digital-republic-code-challenge#readme"
+}
