@@ -121,7 +121,25 @@
     <script>
       const wallsDimensionsForm = document.querySelector('#walls-dimensions-form');
 
-      wallsDimensionsForm.addEventListener('submit', handler)
+      const handleSubmit = (event) => {
+        event.preventDefault();
+        const wallAHeight = document.querySelector('#height-a').value;
+        const wallAWidth = document.querySelector('#width-a').value;
+        const wallBHeight = document.querySelector('#height-b').value;
+        const wallBWidth = document.querySelector('#width-b').value;
+        const wallCHeight = document.querySelector('#height-c').value;
+        const wallCWidth = document.querySelector('#width-c').value;
+        const wallDHeight = document.querySelector('#height-d').value;
+        const wallDWidth = document.querySelector('#width-d').value;
+        console.log(
+          wallAHeight, wallAWidth,
+          wallBHeight, wallBWidth,
+          wallCHeight, wallCWidth,
+          wallDHeight, wallDWidth
+        );
+      };
+
+      wallsDimensionsForm.addEventListener('submit', handleSubmit);
     </script>
   </body>
 
