@@ -71,10 +71,10 @@
       const getWallsValues = (wallsElements) => {
         const wallsObj = {};
         wallsElements.forEach((wall, currentIndex) => {
-          const heightValue = wall.querySelector(`#height-${currentIndex}`).value;
-          const widthValue = wall.querySelector(`#width-${currentIndex}`).value;
-          const windowsValue = wall.querySelector(`#windows-${currentIndex}`).value;
-          const doorsValue = wall.querySelector(`#doors-${currentIndex}`).value;
+          const heightValue = parseFloat(wall.querySelector(`#height-${currentIndex}`).value);
+          const widthValue = parseFloat(wall.querySelector(`#width-${currentIndex}`).value);
+          const windowsValue = parseFloat(wall.querySelector(`#windows-${currentIndex}`).value);
+          const doorsValue = parseFloat(wall.querySelector(`#doors-${currentIndex}`).value);
           wallsObj[`wall${currentIndex}`] = [heightValue, widthValue, windowsValue, doorsValue];
         });
         console.log(wallsObj);
