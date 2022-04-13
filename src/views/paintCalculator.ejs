@@ -10,22 +10,22 @@
 
     <main>
       <form id="walls-dimensions-form">
-        <% [...Array(walls_qty).keys()].forEach((wallID) => { %>
-          <fieldset id=<%= `fs-${wallID + 1}` %>>
-            <legend>Parede <%= `${wallID + 1}` %></legend>
+        <% [...Array(walls_qty).keys()].forEach((wallIndex) => { %>
+          <fieldset class="wall-fieldset">
+            <legend>Parede <%= `${wallIndex + 1}` %></legend>
             <label>
               Altura
-              <input type="number" min="1" max="15" step="0.1" id=<%= `height-${wallID + 1}` %>>
+              <input type="number" min="1" max="15" step="0.1" id=<%= `height-${wallIndex}` %>>
             </label>
     
             <label>
               Largura
-              <input type="number" min="1" max="15" step="0.1" id=<%= `width-${wallID + 1}` %>>
+              <input type="number" min="1" max="15" step="0.1" id=<%= `width-${wallIndex}` %>>
             </label>
     
             <label>
               Janelas
-              <select id=<%= `windows-${wallID + 1}` %>>
+              <select id=<%= `windows-${wallIndex}` %>>
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -35,7 +35,7 @@
     
             <label>
               Portas
-              <select id=<%= `doors-${wallID + 1}` %>>
+              <select id=<%= `doors-${wallIndex}` %>>
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -52,23 +52,23 @@
 
     <script>
       const wallsDimensionsForm = document.querySelector('#walls-dimensions-form');
+      const wallsFieldsets = document.querySelectorAll('.wall-fieldset');
+
+      const getWallsValues = (wallsElements) => {
+        const wallsObj = {};
+        wallsElements.forEach((wall, currentIndex) => {
+          const heightValue = wall.querySelector(`#height-${currentIndex}`).value;
+          const widthValue = wall.querySelector(`#width-${currentIndex}`).value;
+          const windowsValue = wall.querySelector(`#windows-${currentIndex}`).value;
+          const doorsValue = wall.querySelector(`#doors-${currentIndex}`).value;
+          wallsObj[`wall${currentIndex}`] = [heightValue, widthValue, windowsValue, doorsValue];
+        });
+        console.log(wallsObj);
+      };
 
       const handleSubmit = (event) => {
         event.preventDefault();
-        const wallAHeight = document.querySelector('#height-a').value;
-        const wallAWidth = document.querySelector('#width-a').value;
-        const wallBHeight = document.querySelector('#height-b').value;
-        const wallBWidth = document.querySelector('#width-b').value;
-        const wallCHeight = document.querySelector('#height-c').value;
-        const wallCWidth = document.querySelector('#width-c').value;
-        const wallDHeight = document.querySelector('#height-d').value;
-        const wallDWidth = document.querySelector('#width-d').value;
-        console.log(
-          wallAHeight, wallAWidth,
-          wallBHeight, wallBWidth,
-          wallCHeight, wallCWidth,
-          wallDHeight, wallDWidth
-        );
+        return getWallsValues(wallsFieldsets);
       };
 
       wallsDimensionsForm.addEventListener('submit', handleSubmit);
