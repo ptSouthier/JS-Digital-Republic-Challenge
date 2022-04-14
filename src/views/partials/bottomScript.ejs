@@ -1,0 +1,23 @@
+<script>
+  const wallsDimensionsForm = document.querySelector('#walls-dimensions-form');
+  const wallsFieldsets = document.querySelectorAll('.wall-fieldset');
+
+  const getWallsValues = (wallsElements) => {
+    const wallsObj = {};
+    wallsElements.forEach((wall, currentIndex) => {
+      const heightValue = parseFloat(wall.querySelector(`#height-${currentIndex}`).value);
+      const widthValue = parseFloat(wall.querySelector(`#width-${currentIndex}`).value);
+      const windowsValue = parseFloat(wall.querySelector(`#windows-${currentIndex}`).value);
+      const doorsValue = parseFloat(wall.querySelector(`#doors-${currentIndex}`).value);
+      wallsObj[`wall${currentIndex}`] = [heightValue, widthValue, windowsValue, doorsValue];
+    });
+    console.log(wallsObj);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    return getWallsValues(wallsFieldsets);
+  };
+
+  wallsDimensionsForm.addEventListener('submit', handleSubmit);
+</script>
