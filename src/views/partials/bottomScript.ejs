@@ -43,21 +43,30 @@
     return parseFloat(wallElement.querySelector(`#${entryString}-${index}`).value);
   };
 
-  const getWallsValues = (wallsElements) => {
+  const getWallsPaintableArea = (wallsElements) => {
     const wallsObject = {};
     wallsElements.forEach((wall, currentIndex) => {
       const heightValue = getWallEntryValue(wall, 'height', currentIndex);
       const widthValue = getWallEntryValue(wall, 'width', currentIndex);
       const windowsValue = getWallEntryValue(wall, 'windows', currentIndex);
       const doorsValue = getWallEntryValue(wall, 'doors', currentIndex);
-      wallsObject[`wall${currentIndex}`] = [heightValue, widthValue, windowsValue, doorsValue];
+      
+      const wallArea = getSquareMeter(heightValue, widthValue);
+      const windowsArea = getWindowsTotalArea(windowsValue);
+      const doorArea = getDoorsTotalArea(doorsValue);
+      const windowsAndDoorsArea = getWindowsAndDoorsTotalArea(windowsArea, doorArea);
+
+      if (!validateWindowsAndDoorsArea(windowsAndDoorsArea, wallArea)) {
+        
+      }
     });
     return wallsObject;
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    return getWallsValues(wallsFieldsets);
+    const wallsData = getWallsValues(wallsFieldsets);
+    Object.keys(wallsData).forEach((wallData))
   };
 
   wallsDimensionsForm.addEventListener('submit', handleSubmit);
