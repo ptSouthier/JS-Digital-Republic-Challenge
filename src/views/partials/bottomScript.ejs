@@ -45,6 +45,13 @@
     return parseFloat(wallElement.querySelector(`#${entryString}-${index}`).value);
   };
 
+  const createErrorMessageElement = (message) => {
+    const paragraph = document.createElement('p');
+    const standardError = 'Entrada inválida!';
+    paragraph.innerText = standardError + ' ' + message;
+    return paragraph;
+  };
+
   const getWallsPaintableArea = (wallsElements) => {
     const wallsObject = {};
 
@@ -60,23 +67,23 @@
       const windowsAndDoorsArea = getWindowsAndDoorsTotalArea(windowsArea, doorArea);
 
       if (!validateWindowsAndDoorsArea(windowsAndDoorsArea, wallArea)) {
-        const paragraph = document.createElement('p');
-        paragraph.innerText = `Entrada inválida! ` +
-          `Verifique a quantidade de Janelas e/ou Portas da Parede ${currentIndex + 1}.`;
+        const errorElement = createErrorMessageElement(
+          `Verifique a quantidade de Janelas e/ou Portas da Parede ${currentIndex + 1}.`
+        );
         resultContainer.innerHTML = '';
-        resultContainer.appendChild(paragraph);
+        resultContainer.appendChild(errorElement);
       } else if(!validateHeightOfWallsWithDoor(heightValue)) {
-        const paragraph = document.createElement('p');
-        paragraph.innerText = `Entrada inválida! ` +
-          `Verifique o valor da Altura inserida na Parede ${currentIndex + 1}.`;
+        const errorElement = createErrorMessageElement(
+          `Verifique o valor da Altura inserida na Parede ${currentIndex + 1}.`
+        );
         resultContainer.innerHTML = '';
-        resultContainer.appendChild(paragraph);
+        resultContainer.appendChild(errorElement);
       } else if(!validateWallAreaLimit(wallArea)) {
-        const paragraph = document.createElement('p');
-        paragraph.innerText = `Entrada inválida! ` +
-          `Os valores inseridos na Parede ${currentIndex + 1} ultrapassam 15m².`;
+        const errorElement = createErrorMessageElement(
+          `Os valores inseridos na Parede ${currentIndex + 1} ultrapassam 15m².`
+        );
         resultContainer.innerHTML = '';
-        resultContainer.appendChild(paragraph);
+        resultContainer.appendChild(errorElement);
       } else {
         wallsObject[`wall${currentIndex}`] = wallArea - windowsAndDoorsArea;
       };
