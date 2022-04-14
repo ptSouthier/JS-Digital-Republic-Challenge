@@ -2,6 +2,10 @@
   const wallsDimensionsForm = document.querySelector('#walls-dimensions-form');
   const wallsFieldsets = document.querySelectorAll('.wall-fieldset');
 
+  const getSquareMeter = (height, width) => {
+    return height * width;
+  };
+
   const getWallsValues = (wallsElements) => {
     const wallsObj = {};
     wallsElements.forEach((wall, currentIndex) => {
