@@ -44,15 +44,15 @@
   };
 
   const getWallsValues = (wallsElements) => {
-    const wallsObj = {};
+    const wallsObject = {};
     wallsElements.forEach((wall, currentIndex) => {
       const heightValue = getWallEntryValue(wall, 'height', currentIndex);
       const widthValue = getWallEntryValue(wall, 'width', currentIndex);
       const windowsValue = getWallEntryValue(wall, 'windows', currentIndex);
       const doorsValue = getWallEntryValue(wall, 'doors', currentIndex);
-      wallsObj[`wall${currentIndex}`] = [heightValue, widthValue, windowsValue, doorsValue];
+      wallsObject[`wall${currentIndex}`] = [heightValue, widthValue, windowsValue, doorsValue];
     });
-    console.log(wallsObj);
+    return wallsObject;
   };
 
   const handleSubmit = (event) => {
