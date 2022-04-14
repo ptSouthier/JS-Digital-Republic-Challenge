@@ -85,7 +85,7 @@
         resultContainer.innerHTML = '';
         resultContainer.appendChild(errorElement);
       } else {
-        wallsObject[`wall${currentIndex}`] = parseFloat(wallArea - windowsAndDoorsArea).toFixed(1);
+        wallsObject[`wall${currentIndex}`] = parseFloat((wallArea - windowsAndDoorsArea).toFixed(1));
       };
     });
 
