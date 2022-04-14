@@ -71,6 +71,12 @@
           `Verifique o valor da Altura inserida na Parede ${currentIndex + 1}.`;
         resultContainer.innerHTML = '';
         resultContainer.appendChild(paragraph);
+      } else if(!validateWallAreaLimit(wallArea)) {
+        const paragraph = document.createElement('p');
+        paragraph.innerText = `Entrada inválida! ` +
+          `Os valores inseridos na Parede ${currentIndex + 1} ultrapassam 15m².`;
+        resultContainer.innerHTML = '';
+        resultContainer.appendChild(paragraph);
       } else {
         wallsObject[`wall${currentIndex}`] = wallArea - windowsAndDoorsArea;
       };
