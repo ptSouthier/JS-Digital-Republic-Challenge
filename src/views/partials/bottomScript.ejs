@@ -1,6 +1,7 @@
 <script>
   const wallsDimensionsForm = document.querySelector('#walls-dimensions-form');
   const wallsFieldsets = document.querySelectorAll('.wall-fieldset');
+  const resultContainer = document.querySelector('#result-container');
   const windowMeasures = { height: 1.2, width: 2 };
   const doorMeasures = { height: 1.9, width: 0.8 };
   const squareMetersByPaintLiter = 5;
@@ -57,7 +58,7 @@
       const windowsAndDoorsArea = getWindowsAndDoorsTotalArea(windowsArea, doorArea);
 
       if (!validateWindowsAndDoorsArea(windowsAndDoorsArea, wallArea)) {
-        
+
       }
     });
     return wallsObject;
