@@ -3,6 +3,8 @@
   const wallsFieldsets = document.querySelectorAll('.wall-fieldset');
   const windowMeasures = { height: 1.2, width: 2 };
   const doorMeasures = { height: 1.9, width: 0.8 };
+  const squareMetersByPaintLiter = 5;
+  const paintCanSizes = [0.5, 2.5, 3.6, 18];
 
   const getSquareMeter = (height, width) => {
     return height * width;
