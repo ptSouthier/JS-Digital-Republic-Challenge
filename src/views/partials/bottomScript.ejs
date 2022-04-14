@@ -8,12 +8,18 @@
     return height * width;
   };
 
-  const getWindowsAndDoorsTotalArea = (windowsQuantity, doorsQuantity) => {
-    const windowsArea = getSquareMeter(windowMeasures.height, windowMeasures.width);
-    const doorsArea = getSquareMeter(doorMeasures.height, doorMeasures.width);
-    const windowsTotalArea = windowsArea * windowsQuantity;
-    const doorsTotalArea = doorsArea * doorsQuantity;
-    return windowsTotalArea + doorsTotalArea;
+  const getWindowsTotalArea = (windowsQuantity) => {
+    const windowArea = getSquareMeter(windowMeasures.height, windowMeasures.width);
+    return windowArea * windowsQuantity;
+  };
+
+  const getDoorsTotalArea = (doorsQuantity) => {
+    const doorArea = getSquareMeter(doorMeasures.height, doorMeasures.width);
+    return doorArea * doorsQuantity;
+  };
+
+  const getWindowsAndDoorsTotalArea = (windowsArea, doorsArea) => {
+    return windowsArea + doorsArea;
   };
 
   const getWallsValues = (wallsElements) => {
