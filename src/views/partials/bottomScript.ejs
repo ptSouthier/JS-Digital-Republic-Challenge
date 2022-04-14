@@ -29,6 +29,14 @@
     };
   };
 
+  const validateHeightOfWallsWithDoor = (wallHeight) => {
+    const minimumDistanceMargin = 0.3;
+    const minimumAcceptableWallHeight = doorMeasures.height + minimumDistanceMargin;
+    if (wallHeight < minimumAcceptableWallHeight) {
+      return false;
+    };
+  };
+
   const getWallsValues = (wallsElements) => {
     const wallsObj = {};
     wallsElements.forEach((wall, currentIndex) => {
