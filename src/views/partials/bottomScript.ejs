@@ -1,15 +1,14 @@
 <script>
   const wallsDimensionsForm = document.querySelector('#walls-dimensions-form');
   const wallsFieldsets = document.querySelectorAll('.wall-fieldset');
-  
+  const windowMeasures = { height: 1.2, width: 2 };
+  const doorMeasures = { height: 1.9, width: 0.8 };
 
   const getSquareMeter = (height, width) => {
     return height * width;
   };
 
   const getWindowsAndDoorsTotalArea = (windowsQuantity, doorsQuantity) => {
-    const windowMeasures = { height: 1.2, width: 2 };
-    const doorMeasures = { height: 1.9, width: 0.8 };
     const windowsArea = getSquareMeter(windowMeasures.height, windowMeasures.width);
     const doorsArea = getSquareMeter(doorMeasures.height, doorMeasures.width);
     const windowsTotalArea = windowsArea * windowsQuantity;
