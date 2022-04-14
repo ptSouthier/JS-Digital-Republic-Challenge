@@ -42,6 +42,14 @@
     return true;
   };
 
+  const validateWallAreaLimit = (wallArea) => {
+    const maximumSquareMetersByWall = 15;
+    if (wallArea > maximumSquareMetersByWall) {
+      return false;
+    };
+    return true;
+  };
+
   const getWallEntryValue = (wallElement, entryString, index) => {
     return parseFloat(wallElement.querySelector(`#${entryString}-${index}`).value);
   };
