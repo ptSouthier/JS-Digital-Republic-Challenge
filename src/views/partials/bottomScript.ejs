@@ -63,9 +63,17 @@
       if (!validateWindowsAndDoorsArea(windowsAndDoorsArea, wallArea)) {
         const paragraph = document.createElement('p');
         paragraph.innerText = `Entrada inválida! ` +
-          `Verifique a quantidade de janelas e/ou portas da Parede ${currentIndex + 1}.`;
+          `Verifique a quantidade de Janelas e/ou Portas da Parede ${currentIndex + 1}.`;
         resultContainer.innerHTML = '';
         resultContainer.appendChild(paragraph);
+      } else if(!validateHeightOfWallsWithDoor(heightValue)) {
+        const paragraph = document.createElement('p');
+        paragraph.innerText = `Entrada inválida! ` +
+          `Verifique o valor da Altura inserida na Parede ${currentIndex + 1}.`;
+        resultContainer.innerHTML = '';
+        resultContainer.appendChild(paragraph);
+      } else {
+        wallsObject[`wall${currentIndex}`] = wallArea - windowsAndDoorsArea;
       };
     });
 
@@ -75,6 +83,7 @@
   const handleSubmit = (event) => {
     event.preventDefault();
     const wallsData = getWallsPaintableArea(wallsFieldsets);
+    console.log(wallsData);
     // Object.keys(wallsData).forEach((wallData))
   };
 
