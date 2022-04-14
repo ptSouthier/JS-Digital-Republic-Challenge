@@ -27,27 +27,18 @@
 
   const validateWindowsAndDoorsArea = (windowsAndDoorsTotalArea, wallArea) => {
     const fiftyPercentOfWallArea = wallArea * 0.5;
-    if (windowsAndDoorsTotalArea > fiftyPercentOfWallArea) {
-      return false;
-    };
-    return true;
+    return windowsAndDoorsTotalArea > fiftyPercentOfWallArea ? false : true;
   };
 
   const validateHeightOfWallsWithDoor = (wallHeight) => {
     const minimumDistanceMargin = 0.3;
     const minimumAcceptableWallHeight = doorMeasures.height + minimumDistanceMargin;
-    if (wallHeight < minimumAcceptableWallHeight) {
-      return false;
-    };
-    return true;
+    return wallHeight < minimumAcceptableWallHeight ? false : true;
   };
 
   const validateWallAreaLimit = (wallArea) => {
     const maximumSquareMetersByWall = 15;
-    if (wallArea > maximumSquareMetersByWall) {
-      return false;
-    };
-    return true;
+    return wallArea > maximumSquareMetersByWall ? false : true;
   };
 
   const getWallEntryValue = (wallElement, entryString, index) => {
