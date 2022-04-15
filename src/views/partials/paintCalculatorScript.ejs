@@ -21,7 +21,9 @@
     return doorArea * doorsQuantity;
   };
 
-  const getWindowsAndDoorsTotalArea = (windowsArea, doorsArea) => {
+  const getWallNonPaintableArea = (windowsValue, doorsValue) => {
+    const windowsArea = getWindowsTotalArea(windowsValue);
+    const doorsArea = getDoorsTotalArea(doorsValue);
     return windowsArea + doorsArea;
   };
 
@@ -44,8 +46,23 @@
     return wallArea > maximumSquareMetersByWall ? false : true;
   };
 
-  const getWallEntryValue = (wallElement, entryString, index) => {
-    return parseFloat(wallElement.querySelector(`#${entryString}-${index}`).value);
+  const getWallEntryValue = (entryString, index) => {
+    return parseFloat(document.querySelector(`#${entryString}-${index}`).value);
+  };
+
+  const getWallValues = (index) => {
+    const possibleEntries = {
+      'height': 0,
+      'width': 0,
+      'windows': 0,
+      'doors': 0,
+    };
+
+    Object.keys(possibleEntries).forEach((entry) => {
+      possibleEntries[entry] = getWallEntryValue(entry, index);
+    });
+
+    return possibleEntries;
   };
 
   const createErrorMessageElement = (message) => {
@@ -59,17 +76,11 @@
     const wallsObject = {};
 
     wallsElements.forEach((wall, currentIndex) => {
-      const heightValue = getWallEntryValue(wall, 'height', currentIndex);
-      const widthValue = getWallEntryValue(wall, 'width', currentIndex);
-      const windowsValue = getWallEntryValue(wall, 'windows', currentIndex);
-      const doorsValue = getWallEntryValue(wall, 'doors', currentIndex);
-      
-      const wallArea = getSquareMeter(heightValue, widthValue);
-      const windowsArea = getWindowsTotalArea(windowsValue);
-      const doorArea = getDoorsTotalArea(doorsValue);
-      const windowsAndDoorsArea = getWindowsAndDoorsTotalArea(windowsArea, doorArea);
+      const wallValues = getWallValues(currentIndex);
+      const wallArea = getSquareMeter(wallValues.height, wallValues.width);
+      const nonPaintableArea = getWallNonPaintableArea(wallValues.windows, wallValues.doors);
 
-      if (!validateWindowsAndDoorsArea(windowsAndDoorsArea, wallArea)) {
+      if (!validateWindowsAndDoorsArea(nonPaintableArea, wallArea)) {
         const errorElement = createErrorMessageElement(
           `Verifique a quantidade de Janelas e/ou Portas da Parede ${currentIndex + 1}.`
         );
@@ -88,7 +99,7 @@
         resultContainer.innerHTML = '';
         resultContainer.appendChild(errorElement);
       } else {
-        wallsObject[`wall${currentIndex}`] = parseFloat((wallArea - windowsAndDoorsArea).toFixed(1));
+        wallsObject[`wall${currentIndex}`] = parseFloat((wallArea - nonPaintableArea).toFixed(1));
       };
     });
 
