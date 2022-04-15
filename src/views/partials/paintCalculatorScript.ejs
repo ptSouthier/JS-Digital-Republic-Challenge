@@ -95,11 +95,24 @@
     return wallsObject;
   };
 
+  const getNecessaryPaintLiters = (squareMetersByPaintLiter) => {
+    const wallsData = getWallsPaintableArea(wallsFieldsets);
+    const wallsDataKeys = Object.keys(wallsData);
+    
+    if (wallsDataKeys.length === wallsFieldsets.length) {
+      let areaSum = 0;
+      
+      wallsDataKeys.forEach((wallKey) => {
+        areaSum += wallsData[wallKey];
+      });
+
+      return parseFloat((areaSum / squareMetersByPaintLiter).toFixed(1));
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const wallsData = getWallsPaintableArea(wallsFieldsets);
-    console.log(Object.keys(wallsData));
-    // .forEach((wallData))
+    console.log(getNecessaryPaintLiters(squareMetersByPaintLiter));
   };
 
   wallsDimensionsForm.addEventListener('submit', handleSubmit);
