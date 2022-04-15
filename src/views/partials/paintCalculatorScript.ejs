@@ -30,7 +30,10 @@
     return windowsAndDoorsTotalArea > fiftyPercentOfWallArea ? false : true;
   };
 
-  const validateHeightOfWallsWithDoor = (wallHeight) => {
+  const validateHeightOfWallsWithDoor = (wallHeight, doorsQuantity) => {
+    if (doorsQuantity === 0) {
+      return true;
+    };
     const minimumDistanceMargin = 0.3;
     const minimumAcceptableWallHeight = doorMeasures.height + minimumDistanceMargin;
     return wallHeight < minimumAcceptableWallHeight ? false : true;
@@ -72,7 +75,7 @@
         );
         resultContainer.innerHTML = '';
         resultContainer.appendChild(errorElement);
-      } else if(!validateHeightOfWallsWithDoor(heightValue)) {
+      } else if(!validateHeightOfWallsWithDoor(heightValue, doorsValue)) {
         const errorElement = createErrorMessageElement(
           `Verifique o valor da Altura inserida na Parede ${currentIndex + 1}.`
         );
