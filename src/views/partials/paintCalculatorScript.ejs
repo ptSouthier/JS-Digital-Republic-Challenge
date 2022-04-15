@@ -130,16 +130,16 @@
     return paintCansNeeded;
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const paintLitersNeeded = getNecessaryPaintLiters(squareMetersByPaintLiter);
-    const paintCansNeeded = getPaintCansRecommendation(paintLitersNeeded, paintCanSizes);
+  const createResultList = (paintCansNeeded) => {
     const paintCansList = document.createElement('ul');
+
     paintCansList.innerText = 'Para pintar o cômodo especificado, você precisará de:';
     resultContainer.innerHTML = '';
+
     Object.keys(paintCansNeeded).forEach((paintCan) => {
       const listItem = document.createElement('li');
       const keyValue = paintCansNeeded[paintCan];
+
       if (paintCan === 'leftover' && keyValue > 0) {
         listItem.innerText = `E ficará com cerca de ${keyValue}L de tinta restante!`;
         paintCansList.appendChild(listItem);
@@ -148,6 +148,16 @@
         paintCansList.appendChild(listItem);
       };
     });
+
+    return paintCansList;
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const paintLitersNeeded = getNecessaryPaintLiters(squareMetersByPaintLiter);
+    const paintCansNeeded = getPaintCansRecommendation(paintLitersNeeded, paintCanSizes);
+    const paintCansList = createResultList(paintCansNeeded);
+
     resultContainer.appendChild(paintCansList);
   };
 
