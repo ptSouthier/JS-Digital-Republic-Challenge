@@ -9,5 +9,6 @@ app.set('view engine', 'ejs');
 app.set('views', './src/views');
 
 app.get('/', paintCalculatorController.renderPaintCalculator);
+app.post('/submit', paintCalculatorController.submitForm);
 
 app.listen(PORT, () => console.log(`App is running on port ${PORT}`));
