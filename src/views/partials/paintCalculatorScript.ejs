@@ -107,12 +107,48 @@
       });
 
       return parseFloat((areaSum / squareMetersByPaintLiter).toFixed(1));
-    }
+    };
+  };
+
+  const getPaintCansRecommendation = (paintLitersNeeded, paintCanSizes) => {
+    const sortedPaintCanSizes = paintCanSizes.sort((a, b) => b - a);
+    const paintCansNeeded = {};
+    let paintLitersRemaining = paintLitersNeeded;
+
+    while (paintLitersRemaining > 0) {
+      const canSize = sortedPaintCanSizes.find((canSize) => canSize <= paintLitersRemaining);
+      if (!canSize) {
+        const [ smallerCanSize ] = sortedPaintCanSizes.slice(-1);
+        paintCansNeeded[smallerCanSize] = paintCansNeeded[smallerCanSize] + 1 || 1;
+        paintLitersRemaining -= smallerCanSize;
+        paintCansNeeded['leftover'] = Math.abs(parseFloat(paintLitersRemaining.toFixed(1)));
+        break;
+      };
+      paintCansNeeded[canSize] = paintCansNeeded[canSize] + 1 || 1;
+      paintLitersRemaining -= canSize;
+    };
+    return paintCansNeeded;
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(getNecessaryPaintLiters(squareMetersByPaintLiter));
+    const paintLitersNeeded = getNecessaryPaintLiters(squareMetersByPaintLiter);
+    const paintCansNeeded = getPaintCansRecommendation(paintLitersNeeded, paintCanSizes);
+    const paintCansList = document.createElement('ul');
+    paintCansList.innerText = 'Para pintar o cômodo especificado, você precisará de:';
+    resultContainer.innerHTML = '';
+    Object.keys(paintCansNeeded).forEach((paintCan) => {
+      const listItem = document.createElement('li');
+      const keyValue = paintCansNeeded[paintCan];
+      if (paintCan === 'leftover' && keyValue > 0) {
+        listItem.innerText = `E ficará com cerca de ${keyValue}L de tinta restante!`;
+        paintCansList.appendChild(listItem);
+      } else if (paintCan !== 'leftover') {
+        listItem.innerText = `${keyValue} ${keyValue > 1 ? 'latas' : 'lata'} de ${paintCan}L`;
+        paintCansList.appendChild(listItem);
+      };
+    });
+    resultContainer.appendChild(paintCansList);
   };
 
   wallsDimensionsForm.addEventListener('submit', handleSubmit);
