@@ -2,49 +2,7 @@
   const wallsDimensionsForm = document.querySelector('#walls-dimensions-form');
   const wallsFieldsets = document.querySelectorAll('.wall-fieldset');
   const resultContainer = document.querySelector('#result-container');
-  const windowMeasures = { height: 1.2, width: 2 };
-  const doorMeasures = { height: 1.9, width: 0.8 };
-  const squareMetersByPaintLiter = 5;
-  const paintCanSizes = [0.5, 2.5, 3.6, 18];
-
-  const getSquareMeter = (height, width) => {
-    return height * width;
-  };
-
-  const getWindowsTotalArea = (windowsQuantity) => {
-    const windowArea = getSquareMeter(windowMeasures.height, windowMeasures.width);
-    return windowArea * windowsQuantity;
-  };
-
-  const getDoorsTotalArea = (doorsQuantity) => {
-    const doorArea = getSquareMeter(doorMeasures.height, doorMeasures.width);
-    return doorArea * doorsQuantity;
-  };
-
-  const getWallNonPaintableArea = (windowsValue, doorsValue) => {
-    const windowsArea = getWindowsTotalArea(windowsValue);
-    const doorsArea = getDoorsTotalArea(doorsValue);
-    return windowsArea + doorsArea;
-  };
-
-  const validateWindowsAndDoorsArea = (windowsAndDoorsTotalArea, wallArea) => {
-    const fiftyPercentOfWallArea = wallArea * 0.5;
-    return windowsAndDoorsTotalArea > fiftyPercentOfWallArea ? false : true;
-  };
-
-  const validateHeightOfWallsWithDoor = (wallHeight, doorsQuantity) => {
-    if (doorsQuantity === 0) {
-      return true;
-    };
-    const minimumDistanceMargin = 0.3;
-    const minimumAcceptableWallHeight = doorMeasures.height + minimumDistanceMargin;
-    return wallHeight < minimumAcceptableWallHeight ? false : true;
-  };
-
-  const validateWallAreaLimit = (wallArea) => {
-    const maximumSquareMetersByWall = 15;
-    return wallArea > maximumSquareMetersByWall ? false : true;
-  };
+  const url = 'http://localhost:3000';
 
   const getWallEntryValue = (entryString, index) => {
     return parseFloat(document.querySelector(`#${entryString}-${index}`).value);
@@ -65,80 +23,19 @@
     return possibleEntries;
   };
 
+  const getFormData = () => {
+    const formData = {};
+    wallsFieldsets.forEach((wall, index) => {
+      formData[`wall${index}`] = getWallValues(index);
+    });
+    return formData;
+  };
+
   const createErrorMessageElement = (message) => {
     const paragraph = document.createElement('p');
     const standardError = 'Entrada inválida!';
     paragraph.innerText = standardError + ' ' + message;
     return paragraph;
-  };
-
-  const getWallsPaintableArea = (wallsElements) => {
-    const wallsObject = {};
-
-    wallsElements.forEach((wall, currentIndex) => {
-      const wallValues = getWallValues(currentIndex);
-      const wallArea = getSquareMeter(wallValues.height, wallValues.width);
-      const nonPaintableArea = getWallNonPaintableArea(wallValues.windows, wallValues.doors);
-
-      if (!validateWindowsAndDoorsArea(nonPaintableArea, wallArea)) {
-        const errorElement = createErrorMessageElement(
-          `Verifique a quantidade de Janelas e/ou Portas da Parede ${currentIndex + 1}.`
-        );
-        resultContainer.innerHTML = '';
-        resultContainer.appendChild(errorElement);
-      } else if(!validateHeightOfWallsWithDoor(heightValue, doorsValue)) {
-        const errorElement = createErrorMessageElement(
-          `Verifique o valor da Altura inserida na Parede ${currentIndex + 1}.`
-        );
-        resultContainer.innerHTML = '';
-        resultContainer.appendChild(errorElement);
-      } else if(!validateWallAreaLimit(wallArea)) {
-        const errorElement = createErrorMessageElement(
-          `Os valores inseridos na Parede ${currentIndex + 1} ultrapassam 15m².`
-        );
-        resultContainer.innerHTML = '';
-        resultContainer.appendChild(errorElement);
-      } else {
-        wallsObject[`wall${currentIndex}`] = parseFloat((wallArea - nonPaintableArea).toFixed(1));
-      };
-    });
-
-    return wallsObject;
-  };
-
-  const getNecessaryPaintLiters = (squareMetersByPaintLiter) => {
-    const wallsData = getWallsPaintableArea(wallsFieldsets);
-    const wallsDataKeys = Object.keys(wallsData);
-    
-    if (wallsDataKeys.length === wallsFieldsets.length) {
-      let areaSum = 0;
-      
-      wallsDataKeys.forEach((wallKey) => {
-        areaSum += wallsData[wallKey];
-      });
-
-      return parseFloat((areaSum / squareMetersByPaintLiter).toFixed(1));
-    };
-  };
-
-  const getPaintCansRecommendation = (paintLitersNeeded, paintCanSizes) => {
-    const sortedPaintCanSizes = paintCanSizes.sort((a, b) => b - a);
-    const paintCansNeeded = {};
-    let paintLitersRemaining = paintLitersNeeded;
-
-    while (paintLitersRemaining > 0) {
-      const canSize = sortedPaintCanSizes.find((canSize) => canSize <= paintLitersRemaining);
-      if (!canSize) {
-        const [ smallerCanSize ] = sortedPaintCanSizes.slice(-1);
-        paintCansNeeded[smallerCanSize] = paintCansNeeded[smallerCanSize] + 1 || 1;
-        paintLitersRemaining -= smallerCanSize;
-        paintCansNeeded['leftover'] = Math.abs(parseFloat(paintLitersRemaining.toFixed(1)));
-        break;
-      };
-      paintCansNeeded[canSize] = paintCansNeeded[canSize] + 1 || 1;
-      paintLitersRemaining -= canSize;
-    };
-    return paintCansNeeded;
   };
 
   const createResultList = (paintCansNeeded) => {
@@ -163,13 +60,30 @@
     return paintCansList;
   };
 
+  const postData = async (url, data) => {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    return response.json();
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const paintLitersNeeded = getNecessaryPaintLiters(squareMetersByPaintLiter);
-    const paintCansNeeded = getPaintCansRecommendation(paintLitersNeeded, paintCanSizes);
-    const paintCansList = createResultList(paintCansNeeded);
-
-    resultContainer.appendChild(paintCansList);
+    const formData = getFormData();
+    const response = postData(`${url}/submit`, formData).then(data => {
+      if (data.message) {
+        const errorMessage = createErrorMessageElement(data.message);
+        resultContainer.innerHTML = '';
+        resultContainer.appendChild(errorMessage);
+      } else {
+        const paintCansList = createResultList(data);
+        resultContainer.appendChild(paintCansList);
+      };
+    });
   };
 
   wallsDimensionsForm.addEventListener('submit', handleSubmit);
