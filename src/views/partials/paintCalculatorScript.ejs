@@ -1,0 +1,90 @@
+<script>
+  const wallsDimensionsForm = document.querySelector('#walls-dimensions-form');
+  const wallsFieldsets = document.querySelectorAll('.wall-fieldset');
+  const resultContainer = document.querySelector('#result-container');
+  const url = 'http://localhost:3000';
+
+  const getWallEntryValue = (entryString, index) => {
+    return parseFloat(document.querySelector(`#${entryString}-${index}`).value);
+  };
+
+  const getWallValues = (index) => {
+    const possibleEntries = {
+      'height': 0,
+      'width': 0,
+      'windows': 0,
+      'doors': 0,
+    };
+
+    Object.keys(possibleEntries).forEach((entry) => {
+      possibleEntries[entry] = getWallEntryValue(entry, index);
+    });
+
+    return possibleEntries;
+  };
+
+  const getFormData = () => {
+    const formData = {};
+    wallsFieldsets.forEach((wall, index) => {
+      formData[`wall${index}`] = getWallValues(index);
+    });
+    return formData;
+  };
+
+  const createErrorMessageElement = (message) => {
+    const paragraph = document.createElement('p');
+    const standardError = 'Entrada inválida!';
+    paragraph.innerText = standardError + ' ' + message;
+    return paragraph;
+  };
+
+  const createResultList = (paintCansNeeded) => {
+    const paintCansList = document.createElement('ul');
+
+    paintCansList.innerText = 'Para pintar o cômodo especificado, você precisará de:';
+    resultContainer.innerHTML = '';
+
+    Object.keys(paintCansNeeded).forEach((paintCan) => {
+      const listItem = document.createElement('li');
+      const keyValue = paintCansNeeded[paintCan];
+
+      if (paintCan === 'leftover' && keyValue > 0) {
+        listItem.innerText = `E ficará com cerca de ${keyValue}L de tinta restante!`;
+        paintCansList.appendChild(listItem);
+      } else if (paintCan !== 'leftover') {
+        listItem.innerText = `${keyValue} ${keyValue > 1 ? 'latas' : 'lata'} de ${paintCan}L`;
+        paintCansList.appendChild(listItem);
+      };
+    });
+
+    return paintCansList;
+  };
+
+  const postData = async (url, data) => {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    return response.json();
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = getFormData();
+    const response = postData(`${url}/submit`, formData).then(data => {
+      if (data.message) {
+        const errorMessage = createErrorMessageElement(data.message);
+        resultContainer.innerHTML = '';
+        resultContainer.appendChild(errorMessage);
+      } else {
+        const paintCansList = createResultList(data);
+        resultContainer.appendChild(paintCansList);
+      };
+    });
+  };
+
+  wallsDimensionsForm.addEventListener('submit', handleSubmit);
+</script>
