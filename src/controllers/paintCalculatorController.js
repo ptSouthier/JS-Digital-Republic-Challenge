@@ -1,7 +1,10 @@
-const room_walls_quantity = 4;
+const paintCalculatorService = require('../services/paintCalculatorService');
+const roomWallsQuantity = 4;
 
 const renderPaintCalculator = (_req, res) => {
-  res.render('pages/paintCalculator', { walls_qty: room_walls_quantity });
+  res.render('pages/paintCalculator', {
+    wallsQuantity: paintCalculatorService.wallsQuantityRange(roomWallsQuantity),
+  });
 };
 
 module.exports = {

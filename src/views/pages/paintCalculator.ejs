@@ -10,7 +10,7 @@
 
     <main>
       <form id="walls-dimensions-form">
-        <% [...Array(walls_qty).keys()].forEach((wallIndex) => { %>
+        <% wallsQuantity.forEach((wallIndex) => { %>
           <fieldset class="wall-fieldset">
             <legend>Parede <%= `${wallIndex + 1}` %></legend>
             <label>
