@@ -95,8 +95,8 @@
   const handleSubmit = (event) => {
     event.preventDefault();
     const wallsData = getWallsPaintableArea(wallsFieldsets);
-    console.log(wallsData);
-    // Object.keys(wallsData).forEach((wallData))
+    console.log(Object.keys(wallsData));
+    // .forEach((wallData))
   };
 
   wallsDimensionsForm.addEventListener('submit', handleSubmit);
