@@ -1,92 +1,70 @@
-# Digital Republic Code Challenge
+# Boas vindas ao repositório Digital Republic Code Challenge!
+## Contexto
+
+Este projeto foi um Code Challenge recebido através de um convite por e-mail da empresa [Digital Republic](https://www.linkedin.com/company/digital-republic-br/).
+
+O desafio consiste em escrever uma <b>aplicação web</b> ou <b>mobile</b> que auxilie o usuário a calcular a quantidade de tinta necessária para pintar uma sala com 4 paredes. O usuário deve inserir a altura e comprimento de cada parede e se a mesma possui portas e janelas. <br>
+Ao fim,  a aplicação deve retornar ao usuário <b>quais</b> e <b>quantas</b> latas de tinta melhor o atendem dentre os tamanhos _[ 0,5 L, 2,5 L, 3,6 L, 18 L ]_, dando prioridade às latas maiores.
+
+---
+
+## Escolhas do projeto e bibliotecas utilizadas no desenvolvimento:
+
+O desafio deixou em aberto a escolha da tecnologia para o desenvolvimento, sendo assim, optei por desenvolver a aplicação fazendo uso da arquitetura MVC com Node.js e Express para estruturar o servidor, fazendo uso do body-parser para lidar com dados através do body de requisições, o EJS para um maior dinamismo na camada de View e Nodemon como ferramenta de desenvolvimento.
+
+[node.js](https://nodejs.org/en/about/)<br>
+[express](https://www.npmjs.com/package/express)<br>
+[ejs](https://www.npmjs.com/package/ejs)<br>
+[body-parser](https://www.npmjs.com/package/body-parser)<br>
+[nodemon](https://www.npmjs.com/package/nodemon)<br>
 
 
+---
 
-## Getting started
+## Instalação do projeto localmente
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Após cada um dos passos, haverá um exemplo do comando a ser digitado para fazer o que está sendo orientado, caso tenha dificuldades e o exemplo não seja suficiente, não hesite em me contatar em _patrick.southier@hotmail.com_.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
+1. Abra o terminal e crie um diretório no local de sua preferência com o comando **mkdir** _nome-do-diretório_:
+```javascript
+  mkdir ptSouthier-code-challenge
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/ptSouthier/digital-republic-code-challenge.git
-git branch -M main
-git push -uf origin main
+
+2. Entre no diretório que acabou de criar e depois clone o projeto:
+```javascript
+  cd ptSouthier-code-challenge
+  git clone git@gitlab.com:ptSouthier/digital-republic-code-challenge.git
 ```
 
-## Integrate with your tools
+3. Agora entre no diretório do projeto clonado e rode o comando **npm install** para instalar as dependências do projeto _(não se preocupe, você poderá excluir tudo depois que utilizar o app :nerd_face:)_. 
+```javascript
+  cd digital-republic-code-challenge
+  npm install
+```
 
-- [ ] [Set up project integrations](https://gitlab.com/ptSouthier/digital-republic-code-challenge/-/settings/integrations)
+4. Depois da instalação, basta executar o comando **npm start** para subir o servidor. _(Caso alguma mensagem de **erro** apareça no seu terminal, verifique se já possui alguma aplicação em execução em seu localhost:3000)_
+```javascript
+  npm start
+```
 
-## Collaborate with your team
+5. Se em seu terminal apareceu a mensagem _"App is running on port 3000"_, significa que o servidor está de pé! Abra seu navegador e acesse **localhost:3000** para ter acesso à View da aplicação. Agora é só testar alguns inputs e visualizar seu retorno! 😁
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
 
-## Test and Deploy
+<details>
+<summary>Quer entender as regras de negócio?</summary>
+<br>
+[Clique aqui](https://gitlab.com/digitalrepublic/code-challenge) para acessar o repositório do desafio publicado pela Digital Republic e compreender melhor!
+</details>
 
-Use the built-in continuous integration in GitLab.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+---
 
-***
 
-# Editing this README
+## Futuras Melhorias / Problemas Conhecidos
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+* **Testes**
+* Estilização responsiva da aplicação.
+* Implementação do Docker para facilitar sua execução.
+* Ausência de qualquer conexão com banco de dados na camada Model. Algumas variáveis de regras de negócio estão presentes na camada como uma mínima abstração do que seria um possível retorno de uma query a um banco.
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+---
